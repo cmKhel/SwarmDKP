@@ -2,7 +2,7 @@
 Manage your Classic World of Warcraft guild's DKP.
 
 
-- Create multiple tables for DKP editable by either you or someone else given explicity permissions.
+- Create multiple tables for DKP editable by either you (the guild master or officer) or someone else given explicit permissions.
 
 - Add/Subtract DKP manually (for benched players, on-time awards, completion awards, etc.)
 
