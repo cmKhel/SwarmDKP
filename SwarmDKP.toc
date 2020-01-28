@@ -4,4 +4,4 @@
 ## Version: 0.8beta
 ## DefaultState: enabled
 
-main.lua
+Core.lua
