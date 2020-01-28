@@ -13,16 +13,19 @@ print("Is shown: " .. testFrame:IsShown() .. " " .. "Is visible: " .. testFrame:
 
 --  ~=* Create slash commands for chat *=~
 local function MyAddonComands(msg, editbox)
+	local shown = testFrame:IsShown()
+	local visible = testFrame:IsVisible()
+
 	if !testFrame:IsShown() then
 		testFrame:SetShown(true)
 		print("Showing testFrame...")
-		print("IsShown() == " .. testFrame:IsShown())
-		print("IsVisible() == " .. testFrame:IsVisible())
+		print("IsShown() == " .. shown)
+		print("IsVisible() == " .. visible)
 	else
 		testFrame:SetShown(false)
 		print("Hiding testFrame...")
-		print("IsShown() == " .. testFrame:IsShown())
-		print("IsVisible() == " .. testFrame:IsVisible())
+		print("IsShown() == " .. shown)
+		print("IsVisible() == " .. visible)
 	end
 end
 
