@@ -1,9 +1,6 @@
 --Create frame for testing (temporary)
-local frame = CreateFrame("Frame");
+local testFrame = CreateFrame("Frame", "SDKP_TestFrame", UIParent, "BasicFrameTemplateWithInset");
 
 -- Methods / Functions for the new Frame Object:
-frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT");
-frame:SetSize(200, 500);
-frame:SetScale(0.8);
-frame:SetFrameLevel(20);
-frame:SetFrameStrata("MEDIUM");
+testFrame:SetSize(600, 600);
+testFrame:SetPoint("CENTER", UIParent, "CENTER"); -- UI put into center of screen
