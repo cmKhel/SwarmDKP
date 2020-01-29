@@ -53,7 +53,7 @@ local function SlashSDKP(msg, editbox)
 		print("IsShown() == " .. shown);
 		print("IsVisible() == " .. visible);
 	else
-		testFrame:SetShown(false);
+		testFrame:Hide();
 		print("Hiding testFrame...");
 		print("IsShown() == " .. shown);
 		print("IsVisible() == " .. visible);
