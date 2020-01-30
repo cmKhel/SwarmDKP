@@ -38,7 +38,6 @@ end
 function Config:CreateMenu()
 -- ~=* Create frame for testing on load *=~
 local testFrame = CreateFrame("Frame", "SDKP_TestFrame", UIParent, "BasicFrameTemplateWithInset");
-
 -- Methods / Functions for the new Frame Object:
 	testFrame:SetSize(600, 600);
 	testFrame:SetPoint("CENTER", UIParent, "CENTER"); -- panel set at center of screen
