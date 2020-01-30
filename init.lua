@@ -2,14 +2,13 @@
 local _, core = ...; 
 
 --  ~=* Create slash commands for chat *=~
-
 function core:init(event, name)
 	SLASH_SDKP1 = "/sdkp"
-	SLASH_SDKP2 = "/sdkp toggle"
 	SlashCmdList["SDKP"] = function()
 		core.Config.Toggle;
 	end
 
+	core:Print("Swarm DKP loaded.");
 end
 
 local events = CreateFrame("Frame");
