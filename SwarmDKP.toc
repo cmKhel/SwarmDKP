@@ -6,3 +6,5 @@
 SavedVariables: SwarmDKPdb
 
 Core.lua
+config.lua
+init.lua
