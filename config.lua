@@ -36,6 +36,9 @@ end
 
 
 function Config:CreateMenu()
+-- ~=* Create frame for testing on load *=~
+local testFrame = CreateFrame("Frame", "SDKP_TestFrame", UIParent, "BasicFrameTemplateWithInset");
+
 -- Methods / Functions for the new Frame Object:
 	testFrame:SetSize(600, 600);
 	testFrame:SetPoint("CENTER", UIParent, "CENTER"); -- panel set at center of screen
@@ -51,23 +54,12 @@ function Config:CreateMenu()
 	testFrame.title:SetText("Swarm DKP Test Frame");
 
 	-- Create buttons
-
-	-- Name Button
+	-- Name button
 	testFrame.nameBtn = self:CreateButton("LEFT", testFrame, "TOP", -150, -50, 100, 30, "Name");
-	
-	testFrame.classBtn = CreateFrame("Button", nil, testFrame, "GameMenuButtonTemplate");
-	testFrame.classBtn:SetPoint("LEFT", testFrame, "TOP", 0, -50);
-	testFrame.classBtn:SetSize(100, 30);
-	testFrame.classBtn:SetText("Class");
-	testFrame.classBtn:SetNormalFontObject("GameFontNormalLarge");
-	testFrame.classBtn:SetHighlightFontObject("GameFontHighlightLarge");
-
-	testFrame.dkpBtn = CreateFrame("Button", nil, testFrame, "GameMenuButtonTemplate");
-	testFrame.dkpBtn:SetPoint("LEFT", testFrame, "TOP", 150, -50);
-	testFrame.dkpBtn:SetSize(100, 30);
-	testFrame.dkpBtn:SetText("DKP");
-	testFrame.dkpBtn:SetNormalFontObject("GameFontNormalLarge");
-	testFrame.dkpBtn:SetHighlightFontObject("GameFontHighlightLarge");
+	-- Class button
+	testFrame.classBtn = self:CreateButton("LEFT", testFrame, "TOP", 0, -50, 100, 30, "Class");
+	-- DKP button
+	testFrame.dkpBtn = self:CreateButton("LEFT", testFrame, "TOP", 150, -50, 100, 30, "DKP");
 
 -- TODO: Create scroll frames for table choice (left), and for specific table (right)
 
