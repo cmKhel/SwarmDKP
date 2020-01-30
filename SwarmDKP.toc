@@ -3,5 +3,6 @@
 ## Author: Luke Boothby
 ## Version: 0.8beta
 ## DefaultState: enabled
+SavedVariables: SwarmDKPdb
 
 Core.lua
