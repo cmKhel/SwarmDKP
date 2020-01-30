@@ -1,5 +1,4 @@
 -- ~=* Namespaces *=~
-
 local _, core = ...;
 core.Config = {};
 
@@ -17,11 +16,11 @@ local defaults = { -- will be changed later, following guide to learn at the mom
 	}
 }
 
+-- ~=* Frame functions *=~
 function Config:Toggle()
 	local menu = testFrame or Config:CreateMenu();
 	menu:SetShown(not menu:IsShown());
 end
-
 
 -- consolidate similar button creation
 function Config:CreateButton(point, relativeFrame, relativePoint, xOffset, yOffset, width, height, text)
@@ -34,9 +33,8 @@ function Config:CreateButton(point, relativeFrame, relativePoint, xOffset, yOffs
 	return btn;
 end
 
-
-function Config:CreateMenu()
 -- ~=* Create frame for testing on load *=~
+function Config:CreateMenu()
 local testFrame = CreateFrame("Frame", "SDKP_TestFrame", UIParent, "BasicFrameTemplateWithInset");
 -- Methods / Functions for the new Frame Object:
 	testFrame:SetSize(600, 600);
