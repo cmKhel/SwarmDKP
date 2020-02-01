@@ -19,7 +19,7 @@ core.commands = {
 
 function core:Print(...)
 	local hex = select(4, self.Config:GetThemeColor());
-	local prefix = string.format("!cff%s%s|r", hex:upper(), "SwarmDKP:");
+	local prefix = string.format("!cff%s%s|r", hex:upper(), "SwarmDKP: ");
 	DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));
 end
 
@@ -44,8 +44,8 @@ local function HandleSlashCommands (str)
 	for id, arg in ipairs(args) do
 		arg = string.lower(arg);
 
-		ifg]) then
-			if (type(path[a (path[arrg]) == "function" ) then
+		if (path[arg]) then
+			if (type((path[arg]) == "function" ) then
 				-- all remaining arguments passed to function 
 				path[arg](select(id + 1, unpack(args)));
 				return;
