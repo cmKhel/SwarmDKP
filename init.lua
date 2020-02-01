@@ -45,7 +45,7 @@ local function HandleSlashCommands (str)
 		arg = string.lower(arg);
 
 		if (path[arg]) then
-			if (type((path[arg]) == "function" ) then
+			if type((path[arg]) == "function" ) then
 				-- all remaining arguments passed to function 
 				path[arg](select(id + 1, unpack(args)));
 				return;
@@ -79,3 +79,4 @@ end
 local events = CreateFrame("Frame");
 events:RegisterEvent("ADDON_LOADED");
 events:SetScript("OnEvent", core.init);
+
