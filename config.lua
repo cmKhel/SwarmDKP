@@ -22,18 +22,23 @@ function Config:Toggle()
 	menu:SetShown(not menu:IsShown());
 end
 
--- consolidate similar button creation
+function Config:GetThemeColor()
+	local c = defaults.theme;
+	return c.r, c.g, c.b, c.hex;
+end
+
+-- consolidate similar button creation for test panel
 function Config:CreateButton(point, relativeFrame, relativePoint, xOffset, yOffset, width, height, text)
 	local btn = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
 	btn:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);
 	btn:SetSize(width, height);
 	btn:SetText(text);
-	bent:SetNormalFontObject("GameFontNormalLarge");
+	btn:SetNormalFontObject("GameFontNormalLarge");
 	btn:SetHighlightFontObject("GameFontHighlightLarge");
 	return btn;
 end
 
--- ~=* Create frame for testing on load *=~
+-- ~=* Create frame panel for testing on load *=~
 function Config:CreateMenu()
 local testFrame = CreateFrame("Frame", "SDKP_TestFrame", UIParent, "BasicFrameTemplateWithInset");
 -- Methods / Functions for the new Frame Object:
