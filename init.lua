@@ -24,7 +24,7 @@ function core:Print(...)
 end
 
 -- implement handler for slash commands 
-local function HandleSlashCommands (str)
+local function HandleSlashCommands(str)
 	if (#str == 0) then
 		-- entered /sdkp with no additional arguments
 		core.commands.help();

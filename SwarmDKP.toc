@@ -5,6 +5,5 @@
 ## DefaultState: enabled
 SavedVariables: SwarmDKPdb
 
-main.lua
 config.lua
 init.lua
