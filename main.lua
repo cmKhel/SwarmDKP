@@ -5,6 +5,21 @@ local L = LibStub("AceLocale-3.0"):GetLocale("SwarmDKP", true)
 local addonName = GetAddOnMetadata("SwarmDKP", "Title");
 local commPrefix = addonName .. "4";
 
+-- initialize function that i've cannibalized from other addon 
+local function SwarmDKP:OnInitialize()
+	self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", {
+		-- populate with saved variables
+	}, true)
+
+
+	PrintWelcomeMsg();
+end
+
+local function PrintWelcomeMsg()
+	print("|cffffc863SwarmDKP initialized. /sdkp for  more info.")
+end
+
+
 --[=====[ 
 ****************************************
 			CREATE UI
@@ -104,7 +119,7 @@ end
 ****************************************
 --]=====]
 
-function BuildDKPTable(sort_by)
+local function BuildDKPTable(sort_by)
 
 
 end
