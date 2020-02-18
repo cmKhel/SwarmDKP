@@ -48,6 +48,7 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 	-- function to sort by button's name on click
 
 
+
 -- TODO: Create scroll frames for table choice (left), and for specific table (right)
 -- nested frame maybe?
 
@@ -89,7 +90,33 @@ SlashCmdList["SDKP"] = function(msg)
 	SDKP_SlashHandler(string.lower(msg));
 end
 
+--[=====[ 
+****************************************
+			TABLE CONSTRUCTOR
+****************************************
+--]=====]
+-- this breaks the addon
+local function InitializeDKPTable()
+	local dkpVal = 0;
 
+-- create table
+	local dummyTable = {};
+
+	dummyTable["Khel"] = "Shaman";
+	dummyTable["Tango"] = "Mage";
+
+-- populate with guild roster
+--	for i=1,(GetNumGuildMembers()) do
+--		local t = {GetGuildRosterInfo(i)}
+--		if t[2] ~= "Alts" then
+--			table.insert(dummyTable, t[1], {t[11], dkpVal});
+--		end
+--	end
+
+-- put values into savedvariables
+--self.db.char.dummyTable = dummyTable;
+
+end
 
 --[=====[ 
 
