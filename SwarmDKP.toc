@@ -3,8 +3,6 @@
 ## Author: Luke Boothby
 ## Version: 0.8beta
 ## DefaultState: enabled
-## SavedVariables: SwarmDKPdb
-
-embeds.xml
+SavedVariables: SwarmDKPdb
 
 main.lua

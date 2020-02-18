@@ -1,10 +1,14 @@
-SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwarmDKP", "AceConsole-3.0", "AceHook-3.0", "AceEvent-3.0", "AceComm-3.0", "AceSerializer-3.0",
-											"AceDB-3.0", "AceDBOptions-3.0")
+SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwamDKP", "AceConsole-3.0", "AceHook-3.0", "AceEvent-3.0", "AceComm-3.0", "AceSerializer-3.0")
+
+local L = LibStub("AceLocale-3.0"):GetLocale("SwarmDKP", true)
+
+local addonName = GetAddOnMetadata("SwarmDKP", "Title");
+local commPrefix = addonName .. "4";
 
 -- initialize function that i've cannibalized from other addon 
 local function SwarmDKP:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", {
-		-- populate with saved variables (tables we make)
+		-- populate with saved variables
 	}, true)
 
 
@@ -12,7 +16,7 @@ local function SwarmDKP:OnInitialize()
 end
 
 local function PrintWelcomeMsg()
-	SwarmDKP:Print("|cffffc863SwarmDKP initialized. /sdkp for  more info.")
+	print("|cffffc863SwarmDKP initialized. /sdkp for  more info.")
 end
 
 
@@ -78,7 +82,7 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 ****************************************
 --]=====]
 
-local function SwarmDKP:SDKP_SlashHandler(msg, editbox)
+local function SDKP_SlashHandler(msg, editbox)
 -- pattern matching that skips leading whitespace and whitespace between cmd and args
 -- any whitespace at end of args is retained
 	local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
@@ -115,24 +119,7 @@ end
 ****************************************
 --]=====]
 
-local function SwarmDKP:InitializeDKPTable()
-	local dkpVal = 0;
+local function BuildDKPTable(sort_by)
 
--- create table
-	local dummyTable = {};
-
-	dummyTable["Khel", {"Shaman", dkpVal}];
-	dummyTable["Tango", {"Mage", dkpVal}];
-
--- populate with guild roster
---	for i=1,(GetNumGuildMembers()) do
---		local t = {GetGuildRosterInfo(i)}
---		if t[2] ~= "Alts" then
---			table.insert(dummyTable, t[1], {t[11], dkpVal});
---		end
---	end
-
--- put values into savedvariables
-self.db.char.dummyTable = dummyTable;
 
 end
