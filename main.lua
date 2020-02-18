@@ -2,7 +2,6 @@ SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwarmDKP", "AceConsole-3.0", "AceHo
 											"AceDB-3.0", "AceDBOptions-3.0")
 
 -- initialize function that i've cannibalized from other addon 
---[=====[ 
 local function SwarmDKP:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", {
 		-- populate with saved variables (tables we make)
@@ -16,7 +15,6 @@ local function PrintWelcomeMsg()
 	SwarmDKP:Print("|cffffc863SwarmDKP initialized. /sdkp for  more info.")
 end
 
---]=====]
 
 --[=====[ 
 ****************************************
