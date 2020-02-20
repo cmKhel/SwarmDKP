@@ -1,15 +1,35 @@
-SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwarmDKP")
 
+SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwarmDKP", "AceConsole-3.0")
+
+function SwarmDKP:OnInitialize()
+	print("test")
+--    self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", "")
+end
+
+function MyAddon:OnEnable()
+	print("enabling")
+    -- Called when the addon is enabled
+end
+
+function MyAddon:OnDisable()
+	print("disabling")
+    -- Called when the addon is disabled
+end
+
+SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
+
+function SwarmDKP:MySlashProcessorFunc(input)
+  -- Process the slash command ('input' contains whatever follows the slash command)
+  -- pattern matching that skips leading whitespace and whitespace between cmd and args
+-- any whitespace at end of args is retained
+	SwarmDKP:Print("processing slash")
+end
 
 --[=====[ 
 ****************************************
 			CREATE UI
 ****************************************
 --]=====]
-
-function SwarmDKP:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", "")
-end
 
 -- create panel
 local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrameTemplateWithInset");
@@ -56,7 +76,8 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 
 	-- put table on screen
 
--- TODO: Create scroll frames for table choice (left), and for specific table (right)
+
+-- Create scroll frames for table choice (left), and for specific table (right)
 -- nested frame maybe?
 
 -- hide the panel on load
@@ -68,6 +89,7 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 ****************************************
 --]=====]
 
+--[=====[ 
 local function SDKP_SlashHandler(msg, editbox)
 -- pattern matching that skips leading whitespace and whitespace between cmd and args
 -- any whitespace at end of args is retained
@@ -97,12 +119,14 @@ SlashCmdList["SDKP"] = function(msg)
 	SDKP_SlashHandler(string.lower(msg));
 end
 
+--]=====]
+
 --[=====[ 
 ****************************************
 			CREATE TABLE
 ****************************************
 --]=====]
--- this breaks the addon
+
 local function InitializeDKPTable()
 	local dkpVal = 0;
 
