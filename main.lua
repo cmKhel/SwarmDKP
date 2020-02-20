@@ -1,8 +1,15 @@
+SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwarmDKP")
+
+
 --[=====[ 
 ****************************************
 			CREATE UI
 ****************************************
 --]=====]
+
+function SwarmDKP:OnInitialize()
+    self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", "")
+end
 
 -- create panel
 local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrameTemplateWithInset");
@@ -47,7 +54,7 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 	
 	-- function to sort by button's name on click
 
-
+	-- put table on screen
 
 -- TODO: Create scroll frames for table choice (left), and for specific table (right)
 -- nested frame maybe?
@@ -117,6 +124,8 @@ local function InitializeDKPTable()
 --self.db.char.dummyTable = dummyTable;
 
 end
+
+
 
 --[=====[ 
 
