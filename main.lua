@@ -92,7 +92,7 @@ end
 
 --[=====[ 
 ****************************************
-			TABLE CONSTRUCTOR
+			CREATE TABLE
 ****************************************
 --]=====]
 -- this breaks the addon
@@ -108,7 +108,7 @@ local function InitializeDKPTable()
 -- populate with guild roster
 --	for i=1,(GetNumGuildMembers()) do
 --		local t = {GetGuildRosterInfo(i)}
---		if t[2] ~= "Alts" then
+--		if string.lower(t[2]) ~= "alts" then
 --			table.insert(dummyTable, t[1], {t[11], dkpVal});
 --		end
 --	end
