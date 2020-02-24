@@ -2,28 +2,20 @@
 SwarmDKP = LibStub("AceAddon-3.0"):NewAddon("SwarmDKP", "AceConsole-3.0")
 
 function SwarmDKP:OnInitialize()
-	print("test")
---    self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb", "")
+	SwarmDKP:Print("initializing")
+    self.db = LibStub("AceDB-3.0"):New("SwarmDKPdb")
 end
 
-function MyAddon:OnEnable()
-	print("enabling")
+function SwarmDKP:OnEnable()
+	SwarmDKP:Print("enabling")
     -- Called when the addon is enabled
 end
 
-function MyAddon:OnDisable()
-	print("disabling")
+function SwarmDKP:OnDisable()
+	SwarmDKP:Print("disabling")
     -- Called when the addon is disabled
 end
 
-SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
-
-function SwarmDKP:MySlashProcessorFunc(input)
-  -- Process the slash command ('input' contains whatever follows the slash command)
-  -- pattern matching that skips leading whitespace and whitespace between cmd and args
--- any whitespace at end of args is retained
-	SwarmDKP:Print("processing slash")
-end
 
 --[=====[ 
 ****************************************
@@ -83,43 +75,7 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 -- hide the panel on load
 	tablePanel:Hide();
 
---[=====[ 
-****************************************
-			SLASH COMMANDS
-****************************************
---]=====]
 
---[=====[ 
-local function SDKP_SlashHandler(msg, editbox)
--- pattern matching that skips leading whitespace and whitespace between cmd and args
--- any whitespace at end of args is retained
-	local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
-	local function getHelp()
-	  	print("|cffffc863SwarmDKP commands:")
-	    print("/sdkp toggle - toggles DKP window")
-	    print("/sdkp help - prints help commands")
-	end
-
-	if cmd == "toggle" then
-	print("|cffffc863SwarmDKP: |cfffffffeToggling DKP window")
-    tablePanel:SetShown(not tablePanel:IsShown());
-
-	elseif cmd == "help" then
-		getHelp();
-
-	else
-	-- If not handled above, display some sort of help message
-		getHelp();
-  end
-end
-
-SLASH_SDKP1 = "/sdkp"
-
-SlashCmdList["SDKP"] = function(msg)
-	SDKP_SlashHandler(string.lower(msg));
-end
-
---]=====]
 
 --[=====[ 
 ****************************************
@@ -127,30 +83,132 @@ end
 ****************************************
 --]=====]
 
-local function InitializeDKPTable()
-	local dkpVal = 0;
+local DummyTable = {}
 
--- create table
-	local dummyTable = {};
+-- returns length of table passed to function
+function SwarmDKP:TableLength(T)
+local count = 0
+ 	for _ in pairs(T) do count = count + 1 end
+  		return count
+end
 
-	dummyTable["Khel"] = "Shaman";
-	dummyTable["Tango"] = "Mage";
+-- returns true if table contains key, false if not
+function SwarmDKP:TableContains(table, key)
+	for i=1,(TableLength(table)) do
+		if table[i] == key then
+			return true
+		else
+			return false
+	end
+end
+end
 
+function SwarmDKP:InitTable()
 -- populate with guild roster
---	for i=1,(GetNumGuildMembers()) do
---		local t = {GetGuildRosterInfo(i)}
---		if string.lower(t[2]) ~= "alts" then
---			table.insert(dummyTable, t[1], {t[11], dkpVal});
---		end
---	end
+-- currently limited in scope to my guild only
+
+-- DummyTable [1] = name
+-- DummyTable [name[1]] = player class 
+-- DummyTable [name[2]] = dkp value initialized to 0
+	for i=1,(GetNumGuildMembers()) do
+		local t = {GetGuildRosterInfo(i)}
+		if string.lower(t[2]) == "raider" or 
+		string.lower(t[2]) == "core/teamleader" or 
+		string.lower(t[2]) == "officer" or
+		string.lower(t[2]) == "guild master" then
+			DummyTable[t[1]] = {t[11], 0};
+		end
+	end
+end
+
+-- add to dkp value of member within initialized table
+function SwarmDKP:AddDKP(arg1, arg2)
+	name = arg1
+	number = arg2
+
+	if SwarmDKP:TableContains(DummyTable, name) == true then
+		DummyTable[name[2]] = DummyTable[name[2]] + number 
+		SwarmDKP:Print(DummyTable[name] "'s DKP is now " .. DummyTable[name[2]])
+	else
+		SwarmDKP:Print("Player does not exist.")
+	end
+end
+
+
+-- subtract from dkp value of member within initialized table
+function SwarmDKP:SubtractDKP(arg1, arg2)
+	name = arg1
+	number = arg2
+
+	if SwarmDKP:TableContains(DummyTable, name) == true then
+		DummyTable[name[2]] = DummyTable[name[2]] - number 
+		SwarmDKP:Print(DummyTable[name] "'s DKP is now " .. DummyTable[name[2]])
+	else
+		SwarmDKP:Print("Player does not exist.")
+	end
+end
+
+
 
 -- put values into savedvariables
 --self.db.char.dummyTable = dummyTable;
-
-end
-
 
 
 --[=====[ 
 
 --]=====]
+
+
+--[=====[ 
+****************************************
+			SLASH COMMANDS
+****************************************
+--]=====]
+
+SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
+
+function SwarmDKP:MySlashProcessorFunc(input, arg1, arg2)
+	local cmd = input
+	local name = arg1
+	local number = arg2
+
+	local function getHelp()
+	  	SwarmDKP:Print("|cffffc863SwarmDKP commands:")
+	    SwarmDKP:Print("/sdkp toggle - toggles DKP window")
+	    SwarmDKP:Print("/sdkp help - prints help commands")
+	    SwarmDKP:Print("/sdkp init - initializes table -TESTING PURPOSES ONLY-")
+	    SwarmDKP:Print("/sdkp add <name> <number> - add DKP to player in table.")
+	    SwarmDKP:Print("/sdkp subtract <name> <number> - subtract DKP from player in table.")
+	    SwarmDKP:Print("/sdkp check <name> - check if player is in your DKP table.")
+	end
+
+	if cmd == "toggle" then
+	SwarmDKP:Print("|cffffc863SwarmDKP: |cfffffffeToggling DKP window")
+	tablePanel:SetShown(not tablePanel:IsShown());
+
+
+-- creates table of guild members of certain standing with dkp value of 0
+	elseif cmd == "init" then
+		SwarmDKP:InitTable()
+		for key,value in pairs(DummyTable) do SwarmDKP:Print(key,value[1],value[2]) end
+		SwarmDKP:Print("Initialized table with " .. SwarmDKP:TableLength(DummyTable) .. " entries.")
+
+	elseif cmd == "help" then
+		getHelp();
+
+-- these do not work
+	elseif cmd == "add" then
+		SwarmDKP:AddDKP(name, number)
+		
+	elseif cmd == "subtract" then
+		SwarmDKP:SubtractDKP(name, number)
+
+	elseif cmd == "check" then
+		SwarmDKP:Print(SwarmDKP:TableContains(DummyTable, name))
+
+-- this works
+	else
+	-- If not handled above, display some sort of help message
+		getHelp();
+  end
+end
