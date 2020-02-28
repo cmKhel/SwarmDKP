@@ -164,9 +164,9 @@ end
 
 SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
 
--- examples: /sdkp help
---			 /sdkp check Khel
---			 /sdkp add Khel 15 
+-- example usage: /sdkp help
+--			 	  /sdkp check Khel
+--			 	  /sdkp add Khel 15 
 function SwarmDKP:MySlashProcessorFunc(cmd, name, number)
 
 	local function getHelp()
