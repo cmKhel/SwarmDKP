@@ -85,24 +85,6 @@ local tablePanel = CreateFrame("Frame", "SDKP_tablePanel", UIParent, "BasicFrame
 
 local DummyTable = {}
 
--- returns length of table passed to function
-function SwarmDKP:TableLength(T)
-local count = 0
- 	for _ in pairs(T) do count = count + 1 end
-  		return count
-end
-
--- returns true if table contains key, false if not
-function SwarmDKP:TableContains(table, key)
-	for i=1,(TableLength(table)) do
-		if table[i] == key then
-			return true
-		else
-			return false
-	end
-end
-end
-
 function SwarmDKP:InitTable()
 -- populate with guild roster
 -- currently limited in scope to my guild only
@@ -121,34 +103,6 @@ function SwarmDKP:InitTable()
 	end
 end
 
--- add to dkp value of member within initialized table
-function SwarmDKP:AddDKP(arg1, arg2)
-	name = arg1
-	number = arg2
-
-	if SwarmDKP:TableContains(DummyTable, name) == true then
-		DummyTable[name[2]] = DummyTable[name[2]] + number 
-		SwarmDKP:Print(DummyTable[name] "'s DKP is now " .. DummyTable[name[2]])
-	else
-		SwarmDKP:Print("Player does not exist.")
-	end
-end
-
-
--- subtract from dkp value of member within initialized table
-function SwarmDKP:SubtractDKP(arg1, arg2)
-	name = arg1
-	number = arg2
-
-	if SwarmDKP:TableContains(DummyTable, name) == true then
-		DummyTable[name[2]] = DummyTable[name[2]] - number 
-		SwarmDKP:Print(DummyTable[name] "'s DKP is now " .. DummyTable[name[2]])
-	else
-		SwarmDKP:Print("Player does not exist.")
-	end
-end
-
-
 
 -- put values into savedvariables
 --self.db.char.dummyTable = dummyTable;
@@ -165,12 +119,55 @@ end
 ****************************************
 --]=====]
 
+-- returns length of table passed to function
+function SwarmDKP:TableLength(T)
+local count = 0
+ 	for _ in pairs(T) do count = count + 1 end
+  		return count
+end
+
+-- returns true if table contains key, false if not
+function SwarmDKP:TableContains(key)
+	for i=1,(TableLength(DummyTable)) do
+		if DummyTable[i] == key then
+			return true
+		else
+			return false
+		end
+	end
+end
+
+-- add to dkp value of member within initialized table
+function SwarmDKP:AddDKP(name, number)
+
+	if SwarmDKP:TableContains(DummyTable, name) == true then
+		DummyTable[name[2]] = DummyTable[name[2]] + number 
+		SwarmDKP:Print(DummyTable[name] "'s DKP is now " .. DummyTable[name[2]])
+	else
+		SwarmDKP:Print("Player does not exist.")
+	end
+end
+
+
+-- subtract from dkp value of member within initialized table
+function SwarmDKP:SubtractDKP(name, number)
+
+	if SwarmDKP:TableContains(DummyTable, name) == true then
+		DummyTable[name[2]] = DummyTable[name[2]] - number 
+		SwarmDKP:Print(DummyTable[name] "'s DKP is now " .. DummyTable[name[2]])
+	else
+		SwarmDKP:Print("Player does not exist.")
+	end
+end
+
+
+
 SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
 
-function SwarmDKP:MySlashProcessorFunc(input, arg1, arg2)
-	local cmd = input
-	local name = arg1
-	local number = arg2
+-- examples: /sdkp help
+--			 /sdkp check Khel
+--			 /sdkp add Khel 15 
+function SwarmDKP:MySlashProcessorFunc(cmd, name, number)
 
 	local function getHelp()
 	  	SwarmDKP:Print("|cffffc863SwarmDKP commands:")
@@ -197,14 +194,14 @@ function SwarmDKP:MySlashProcessorFunc(input, arg1, arg2)
 		getHelp();
 
 -- these do not work
-	elseif cmd == "add" then
+	elseif cmd == "add" and name ~= nil and number ~= nil then
 		SwarmDKP:AddDKP(name, number)
 		
-	elseif cmd == "subtract" then
+	elseif cmd == "subtract" and name ~= nil and number ~= nil then
 		SwarmDKP:SubtractDKP(name, number)
 
-	elseif cmd == "check" then
-		SwarmDKP:Print(SwarmDKP:TableContains(DummyTable, name))
+	elseif cmd == "check" and name ~= nil then
+		SwarmDKP:Print(SwarmDKP:TableContains(name))
 
 -- this works
 	else
