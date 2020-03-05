@@ -128,7 +128,7 @@ end
 
 -- returns true if table contains key, false if not
 function SwarmDKP:TableContains(key)
-	for i=1,(TableLength(DummyTable)) do
+	for i=1,(TableLength(DummyTable)) do -- even specifically pointing to dummytable doesn't work
 		if DummyTable[i] == key then
 			return true
 		else
@@ -138,7 +138,14 @@ function SwarmDKP:TableContains(key)
 end
 
 -- add to dkp value of member within initialized table
-function SwarmDKP:AddDKP(name, number)
+function SwarmDKP:AddDKP(arg)
+local input = arg
+local commands = {}
+for i in string.gmatch(input, "%S+") do
+   commands[i]
+end
+local name = commands[1]
+local number = commands[2]
 
 	if SwarmDKP:TableContains(DummyTable, name) == true then
 		DummyTable[name[2]] = DummyTable[name[2]] + number 
@@ -150,7 +157,14 @@ end
 
 
 -- subtract from dkp value of member within initialized table
-function SwarmDKP:SubtractDKP(name, number)
+function SwarmDKP:SubtractDKP(arg)
+local input = arg
+local commands = {}
+for i in string.gmatch(input, "%S+") do
+   commands[i]
+end
+local name = commands[1]
+local number = commands[2]
 
 	if SwarmDKP:TableContains(DummyTable, name) == true then
 		DummyTable[name[2]] = DummyTable[name[2]] - number 
@@ -167,7 +181,15 @@ SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
 -- example usage: /sdkp help
 --			 	  /sdkp check Khel
 --			 	  /sdkp add Khel 15 
-function SwarmDKP:MySlashProcessorFunc(cmd, name, number)
+function SwarmDKP:MySlashProcessorFunc(arg)
+local input = arg
+local commands = {}
+for i in string.gmatch(input, "%S+") do
+   commands[i]
+end
+local cmd = commands[1]
+local name = commands[2]
+local number = commands[3]
 
 	local function getHelp()
 	  	SwarmDKP:Print("|cffffc863SwarmDKP commands:")
@@ -178,6 +200,7 @@ function SwarmDKP:MySlashProcessorFunc(cmd, name, number)
 	    SwarmDKP:Print("/sdkp subtract <name> <number> - subtract DKP from player in table.")
 	    SwarmDKP:Print("/sdkp check <name> - check if player is in your DKP table.")
 	end
+	SwarmDKP:Print(cmd)
 
 	if cmd == "toggle" then
 	SwarmDKP:Print("|cffffc863SwarmDKP: |cfffffffeToggling DKP window")
