@@ -16,6 +16,39 @@ function SwarmDKP:OnDisable()
     -- Called when the addon is disabled
 end
 
+--[=====[ 
+****************************************
+			GENERIC FUNCTIONS
+****************************************
+--]=====]
+--split a string
+local function split(s, delimiter)
+    result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+-- returns length of table passed to function
+-- "attempt to call global 'TableLength' (a nil value)"
+-- why is this nil?
+function SwarmDKP:TableLength(T)
+local count = 1
+ 	for _ in pairs(T) do count = count + 1 end
+  		return count
+end
+
+-- returns true if table contains key, false if not
+function SwarmDKP:TableContains(key)
+	for i=1,(TableLength(DummyTable)) do -- even specifically pointing to dummytable doesn't work
+		if DummyTable[i] == key then
+			return true
+		else
+			return false
+		end
+	end
+end
 
 --[=====[ 
 ****************************************
@@ -103,7 +136,6 @@ function SwarmDKP:InitTable()
 	end
 end
 
-
 -- put values into savedvariables
 --self.db.char.dummyTable = dummyTable;
 
@@ -119,33 +151,8 @@ end
 ****************************************
 --]=====]
 
--- returns length of table passed to function
-function SwarmDKP:TableLength(T)
-local count = 0
- 	for _ in pairs(T) do count = count + 1 end
-  		return count
-end
-
--- returns true if table contains key, false if not
-function SwarmDKP:TableContains(key)
-	for i=1,(TableLength(DummyTable)) do -- even specifically pointing to dummytable doesn't work
-		if DummyTable[i] == key then
-			return true
-		else
-			return false
-		end
-	end
-end
-
 -- add to dkp value of member within initialized table
-function SwarmDKP:AddDKP(arg)
-local input = arg
-local commands = {}
-for i in string.gmatch(input, "%S+") do
-   commands[i]
-end
-local name = commands[1]
-local number = commands[2]
+function SwarmDKP:AddDKP(name, number)
 
 	if SwarmDKP:TableContains(DummyTable, name) == true then
 		DummyTable[name[2]] = DummyTable[name[2]] + number 
@@ -155,16 +162,8 @@ local number = commands[2]
 	end
 end
 
-
 -- subtract from dkp value of member within initialized table
-function SwarmDKP:SubtractDKP(arg)
-local input = arg
-local commands = {}
-for i in string.gmatch(input, "%S+") do
-   commands[i]
-end
-local name = commands[1]
-local number = commands[2]
+function SwarmDKP:SubtractDKP(name, number)
 
 	if SwarmDKP:TableContains(DummyTable, name) == true then
 		DummyTable[name[2]] = DummyTable[name[2]] - number 
@@ -174,22 +173,25 @@ local number = commands[2]
 	end
 end
 
-
-
 SwarmDKP:RegisterChatCommand("sdkp", "MySlashProcessorFunc")
-
 -- example usage: /sdkp help
 --			 	  /sdkp check Khel
 --			 	  /sdkp add Khel 15 
 function SwarmDKP:MySlashProcessorFunc(arg)
-local input = arg
-local commands = {}
-for i in string.gmatch(input, "%S+") do
-   commands[i]
-end
+local commands = split(arg, " ")
 local cmd = commands[1]
 local name = commands[2]
 local number = commands[3]
+
+--[=====[ 
+	if cmd ~= nil then
+		SwarmDKP:Print("DEBUG - ARG1 = " .. cmd)
+	elseif name ~= nil then 
+		SwarmDKP:Print("DEBUG - ARG2 = " .. name)
+	elseif number ~= nil then	
+		SwarmDKP:Print("DEBUG - ARG3 = " .. number)
+	end
+--]=====]
 
 	local function getHelp()
 	  	SwarmDKP:Print("|cffffc863SwarmDKP commands:")
@@ -200,12 +202,10 @@ local number = commands[3]
 	    SwarmDKP:Print("/sdkp subtract <name> <number> - subtract DKP from player in table.")
 	    SwarmDKP:Print("/sdkp check <name> - check if player is in your DKP table.")
 	end
-	SwarmDKP:Print(cmd)
 
 	if cmd == "toggle" then
 	SwarmDKP:Print("|cffffc863SwarmDKP: |cfffffffeToggling DKP window")
 	tablePanel:SetShown(not tablePanel:IsShown());
-
 
 -- creates table of guild members of certain standing with dkp value of 0
 	elseif cmd == "init" then
@@ -216,7 +216,6 @@ local number = commands[3]
 	elseif cmd == "help" then
 		getHelp();
 
--- these do not work
 	elseif cmd == "add" and name ~= nil and number ~= nil then
 		SwarmDKP:AddDKP(name, number)
 		
@@ -226,7 +225,6 @@ local number = commands[3]
 	elseif cmd == "check" and name ~= nil then
 		SwarmDKP:Print(SwarmDKP:TableContains(name))
 
--- this works
 	else
 	-- If not handled above, display some sort of help message
 		getHelp();
