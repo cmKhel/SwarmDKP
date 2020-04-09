@@ -24,11 +24,14 @@ end
 --split a string
 local function split(s, delimiter)
     result = {};
-    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, match);
+    --for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+    for token in string.gmatch(s, "%S+") do
+        table.insert(result, token);
     end
     return result;
 end
+
+
 
 -- returns length of table passed to function
 -- "attempt to call global 'TableLength' (a nil value)"
@@ -182,7 +185,10 @@ local commands = split(arg, " ")
 local cmd = commands[1]
 local name = commands[2]
 local number = commands[3]
-
+SwarmDKP:Print("Commands: ")
+SwarmDKP:Print(cmd)
+SwarmDKP:Print(name)
+SwarmDKP:Print(number)
 --[=====[ 
 	if cmd ~= nil then
 		SwarmDKP:Print("DEBUG - ARG1 = " .. cmd)
